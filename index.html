@@ -1,856 +1,959 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kaif · Full Stack Developer & AI Builder</title>
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Kaif Ali · Social Media Strategist</title>
+  <!-- Fonts: Satoshi, Poppins, Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Satoshi:wght@400;500;700;900&family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Lucide icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
+    /* ----- reset & base ----- */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
-
     body {
-      background: #0b0d15;
-      color: #f0f4ff;
+      background: #090909;
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
       overflow-x: hidden;
-    }
-
-    html {
       scroll-behavior: smooth;
     }
-
-    /* ---------- NEON GLOW ---------- */
-    .neon-glow {
-      text-shadow: 0 0 8px #00f0ff, 0 0 20px #00f0ff66, 0 0 40px #00f0ff33;
+    ::-webkit-scrollbar {
+      width: 6px;
     }
-    .neon-box {
-      box-shadow: 0 0 12px #00f0ff55, 0 0 30px #00f0ff22;
-      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    ::-webkit-scrollbar-track {
+      background: #111;
     }
-    .neon-box:hover {
-      box-shadow: 0 0 24px #00f0ffaa, 0 0 60px #00f0ff44;
-      transform: translateY(-6px);
+    ::-webkit-scrollbar-thumb {
+      background: #6C63FF;
+      border-radius: 12px;
     }
 
-    /* ---------- HEADER ---------- */
-    header {
+    /* ----- glass / cards ----- */
+    .glass {
+      background: rgba(17, 17, 17, 0.65);
+      backdrop-filter: blur(12px) saturate(180%);
+      -webkit-backdrop-filter: blur(12px) saturate(180%);
+      border: 1px solid rgba(108, 99, 255, 0.15);
+      box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.8);
+    }
+    .glass-card {
+      background: rgba(17, 17, 17, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      transition: all 0.3s ease;
+    }
+    .glass-card:hover {
+      border-color: rgba(108, 99, 255, 0.2);
+      box-shadow: 0 12px 48px rgba(108, 99, 255, 0.08);
+    }
+    .gradient-border {
+      position: relative;
+      border-radius: 24px;
+      background: #111;
+    }
+    .gradient-border::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 26px;
+      padding: 2px;
+      background: linear-gradient(135deg, #6C63FF, #00D4FF, #6C63FF);
+      background-size: 300% 300%;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      animation: borderGlow 6s ease infinite;
+      pointer-events: none;
+    }
+    @keyframes borderGlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ----- typography ----- */
+    .font-satoshi {
+      font-family: 'Satoshi', sans-serif;
+    }
+    .font-space {
+      font-family: 'Space Grotesk', monospace;
+    }
+    .text-muted {
+      color: #A9A9A9;
+    }
+
+    /* ----- background blobs ----- */
+    .blob-bg {
+      position: fixed;
+      top: -20%;
+      left: -10%;
+      width: 70vw;
+      height: 70vw;
+      background: radial-gradient(circle at 30% 40%, rgba(108, 99, 255, 0.08), transparent 70%);
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .blob-bg-2 {
+      position: fixed;
+      bottom: -10%;
+      right: -10%;
+      width: 60vw;
+      height: 60vw;
+      background: radial-gradient(circle at 70% 60%, rgba(0, 212, 255, 0.06), transparent 70%);
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ----- custom cursor glow (spotlight) ----- */
+    .cursor-glow {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(108, 99, 255, 0.07) 0%, transparent 70%);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      transition: opacity 0.2s;
+    }
+
+    /* ----- floating shapes ----- */
+    .floating-shape {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(108, 99, 255, 0.03);
+      border: 1px solid rgba(108, 99, 255, 0.06);
+      animation: float 12s infinite alternate ease-in-out;
+      pointer-events: none;
+    }
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+      100% { transform: translate(40px, -30px) scale(1.1) rotate(8deg); }
+    }
+
+    /* ----- tilt card (js enhanced) ----- */
+    .tilt-card {
+      transition: transform 0.2s ease;
+      will-change: transform;
+    }
+
+    /* ----- counters ----- */
+    .counter-number {
+      font-family: 'Space Grotesk', monospace;
+      font-weight: 700;
+    }
+
+    /* ----- marquee / testimonial auto-slide ----- */
+    .marquee-wrap {
+      overflow: hidden;
+      white-space: nowrap;
+      display: flex;
+      gap: 3rem;
+      animation: marqueeScroll 28s linear infinite;
+    }
+    .marquee-wrap:hover {
+      animation-play-state: paused;
+    }
+    @keyframes marqueeScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ----- scroll progress ----- */
+    .scroll-progress {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      padding: 1rem 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      backdrop-filter: blur(14px) saturate(180%);
-      background: rgba(11, 13, 21, 0.7);
-      border-bottom: 1px solid rgba(0, 240, 255, 0.12);
-      z-index: 999;
-      animation: navIn 0.8s ease-out;
-    }
-    @keyframes navIn {
-      0% { opacity: 0; transform: translateY(-30px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-
-    .logo {
-      font-size: 1.7rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, #a0f0ff, #00f0ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: -0.5px;
-    }
-    .logo i {
-      -webkit-text-fill-color: initial;
-      color: #00f0ff;
-      margin-right: 6px;
-      filter: drop-shadow(0 0 8px #00f0ff);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2.2rem;
-      align-items: center;
-    }
-    .nav-links a {
-      color: #d0e4ff;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 0.95rem;
-      transition: 0.25s ease;
-      position: relative;
-    }
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -6px;
-      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #6C63FF, #00D4FF);
+      z-index: 99999;
       width: 0%;
-      height: 2px;
-      background: #00f0ff;
-      box-shadow: 0 0 12px #00f0ff;
-      transition: width 0.3s ease;
-    }
-    .nav-links a:hover {
-      color: #ffffff;
-    }
-    .nav-links a:hover::after {
-      width: 100%;
-    }
-    .nav-cta {
-      background: transparent;
-      border: 1.5px solid #00f0ff;
-      color: #00f0ff;
-      padding: 0.4rem 1.4rem;
-      border-radius: 40px;
-      font-weight: 600;
-      transition: 0.3s ease;
-      box-shadow: 0 0 12px #00f0ff33;
-    }
-    .nav-cta:hover {
-      background: #00f0ff;
-      color: #0b0d15;
-      box-shadow: 0 0 30px #00f0ffaa;
-      transform: scale(1.04);
+      transition: width 0.1s;
     }
 
-    /* ---------- HERO ---------- */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 8rem 5% 4rem;
+    /* ----- ripple effect (on buttons) ----- */
+    .ripple-btn {
       position: relative;
-      text-align: center;
-      background: radial-gradient(circle at 30% 40%, #142433 0%, #0b0d15 80%);
       overflow: hidden;
     }
-    .hero::before {
+
+    /* ----- section reveal (fade-up) ----- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ----- responsive tweaks ----- */
+    @media (max-width: 768px) {
+      .hero-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+      }
+    }
+
+    /* ----- extra: animated gradient text ----- */
+    .gradient-text {
+      background: linear-gradient(135deg, #6C63FF, #00D4FF, #6C63FF);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradShift 6s ease infinite;
+    }
+    @keyframes gradShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ----- work process timeline (vertical) ----- */
+    .timeline-item {
+      border-left: 2px solid rgba(108, 99, 255, 0.3);
+      padding-left: 24px;
+      position: relative;
+    }
+    .timeline-item::before {
       content: '';
       position: absolute;
-      inset: 0;
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" opacity="0.06"><path d="M0 400 L200 200 L400 400 L600 200 L800 400 L600 600 L400 400 L200 600 Z" fill="%2300f0ff"/><circle cx="400" cy="400" r="120" fill="none" stroke="%2300f0ff" stroke-width="2"/></svg>') no-repeat center/cover;
-      animation: rotateBg 50s linear infinite;
-      pointer-events: none;
-    }
-    @keyframes rotateBg {
-      0% { transform: rotate(0deg) scale(1.2); }
-      100% { transform: rotate(360deg) scale(1.2); }
-    }
-
-    .hero-content {
-      z-index: 2;
-      max-width: 900px;
-      animation: fadeUp 1s ease-out;
-    }
-    @keyframes fadeUp {
-      0% { opacity: 0; transform: translateY(50px); }
-      100% { opacity: 1; transform: translateY(0); }
+      left: -8px;
+      top: 6px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #6C63FF;
+      border: 2px solid #090909;
+      box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.2);
     }
 
-    .hero h1 {
-      font-size: clamp(2.8rem, 10vw, 4.8rem);
-      font-weight: 800;
-      line-height: 1.1;
-      margin-bottom: 0.5rem;
+    /* ----- case study cards (expanded) ----- */
+    .case-card {
+      transition: all 0.3s ease;
     }
-    .hero h1 .highlight {
-      background: linear-gradient(135deg, #a0f0ff, #00c8ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-shadow: 0 0 40px #00f0ff66;
-    }
-
-    .typing-wrapper {
-      font-size: 1.6rem;
-      font-weight: 500;
-      color: #b8cef0;
-      min-height: 3.2rem;
-      margin: 0.8rem 0 1.2rem;
-    }
-    .typing-wrapper .cursor {
-      display: inline-block;
-      width: 3px;
-      background: #00f0ff;
-      margin-left: 4px;
-      animation: blink 0.9s step-end infinite;
-      height: 1.6rem;
-      vertical-align: text-bottom;
-    }
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-
-    .hero-sub {
-      font-size: 1.2rem;
-      color: #b8cef0;
-      max-width: 700px;
-      margin: 0 auto 2.5rem;
-      line-height: 1.7;
-      backdrop-filter: blur(2px);
-    }
-
-    .quote-card {
-      background: rgba(0, 240, 255, 0.04);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(0, 240, 255, 0.15);
-      border-radius: 40px;
-      padding: 1.8rem 2.5rem;
-      max-width: 700px;
-      margin: 0 auto 2rem;
-      text-align: left;
-      box-shadow: 0 0 30px #00f0ff0a;
-      transition: 0.3s ease;
-    }
-    .quote-card:hover {
-      border-color: #00f0ff55;
-      box-shadow: 0 0 50px #00f0ff1a;
-    }
-    .quote-card i {
-      color: #00f0ff;
-      opacity: 0.5;
-      font-size: 1.8rem;
-      margin-right: 10px;
-    }
-    .quote-card p {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      color: #d0e4ff;
-    }
-    .quote-card .author {
-      margin-top: 0.6rem;
-      font-weight: 600;
-      color: #a0f0ff;
-      text-align: right;
-      font-size: 0.95rem;
-    }
-    .quote-card .author small {
-      font-weight: 300;
-      color: #7a96b8;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1.2rem;
-      margin-top: 0.5rem;
-    }
-    .btn-primary {
-      background: #00f0ff;
-      border: none;
-      color: #0b0d15;
-      padding: 0.9rem 2.8rem;
-      border-radius: 60px;
-      font-weight: 700;
-      font-size: 1rem;
-      transition: 0.3s ease;
-      box-shadow: 0 0 30px #00f0ff77;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-    }
-    .btn-primary:hover {
-      transform: scale(1.06) translateY(-4px);
-      box-shadow: 0 0 60px #00f0ffcc;
-      background: #8af4ff;
-    }
-    .btn-outline {
-      background: transparent;
-      border: 1.5px solid #d0e4ff;
-      color: #d0e4ff;
-      padding: 0.9rem 2.5rem;
-      border-radius: 60px;
-      font-weight: 600;
-      transition: 0.3s ease;
-      backdrop-filter: blur(4px);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-    }
-    .btn-outline:hover {
-      border-color: #00f0ff;
-      color: #ffffff;
-      box-shadow: 0 0 30px #00f0ff44;
+    .case-card:hover {
       transform: translateY(-4px);
+      border-color: rgba(108, 99, 255, 0.3);
     }
 
-    /* ---------- SECTION BASE ---------- */
-    .section {
-      padding: 5rem 5% 4rem;
-      max-width: 1300px;
-      margin: 0 auto;
-    }
-    .section-title {
-      font-size: 2.6rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.5px;
-      background: linear-gradient(135deg, #ffffff, #b0dcff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      display: inline-block;
-    }
-    .section-sub {
-      color: #8aa8d0;
-      margin-bottom: 3rem;
-      font-size: 1.1rem;
-      border-left: 3px solid #00f0ff;
-      padding-left: 1.2rem;
-      box-shadow: 0 0 20px #00f0ff11;
-    }
-
-    /* ---------- ABOUT ---------- */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2.5rem;
-      align-items: start;
-    }
-    @media (max-width: 800px) {
-      .about-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-    .about-text {
-      font-size: 1.05rem;
-      line-height: 1.7;
-      color: #c8d8f0;
-    }
-    .about-text strong {
-      color: #a0f0ff;
-    }
-    .about-roles {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-      margin: 1.2rem 0 1.5rem;
-    }
-    .about-roles span {
-      background: rgba(0, 240, 255, 0.08);
-      border: 1px solid rgba(0, 240, 255, 0.15);
-      padding: 0.4rem 1.2rem;
-      border-radius: 40px;
-      font-size: 0.85rem;
-      color: #b0dcff;
-    }
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-      gap: 0.8rem;
-      margin-top: 1rem;
-    }
-    .skill-tag {
-      background: rgba(18, 28, 46, 0.6);
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(0, 240, 255, 0.1);
-      border-radius: 30px;
-      padding: 0.5rem 0.8rem;
-      text-align: center;
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: #c0d8f0;
-      transition: 0.3s ease;
-    }
-    .skill-tag:hover {
-      border-color: #00f0ff66;
-      box-shadow: 0 0 20px #00f0ff22;
-      transform: scale(1.02);
-      color: #ffffff;
-    }
-    .skill-tag i {
-      color: #00f0ff;
-      margin-right: 4px;
-    }
-
-    /* ---------- PROJECTS ---------- */
-    .project-showcase {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2.5rem;
-      margin-bottom: 2rem;
-    }
-    @media (max-width: 750px) {
-      .project-showcase {
-        grid-template-columns: 1fr;
-      }
-    }
-    .project-card {
-      background: rgba(18, 28, 46, 0.5);
-      backdrop-filter: blur(8px);
-      border-radius: 40px;
-      padding: 2rem 2rem 2.2rem;
-      border: 1px solid rgba(0, 240, 255, 0.1);
-      transition: 0.3s ease;
-      animation: cardFade 0.8s ease forwards;
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    .project-card:nth-child(1) { animation-delay: 0.1s; }
-    .project-card:nth-child(2) { animation-delay: 0.3s; }
-    @keyframes cardFade {
-      0% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-    .project-card:hover {
-      border-color: #00f0ff66;
-      transform: translateY(-8px);
-      box-shadow: 0 0 40px #00f0ff22;
-    }
-    .project-card h3 {
-      font-size: 1.8rem;
-      margin-bottom: 0.4rem;
-    }
-    .project-card h3 i {
-      color: #00f0ff;
-      margin-right: 10px;
-    }
-    .project-card .tech-stack {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin: 1rem 0 1.2rem;
-    }
-    .project-card .tech-stack span {
-      background: rgba(0, 240, 255, 0.06);
-      padding: 0.2rem 1rem;
-      border-radius: 30px;
-      font-size: 0.75rem;
-      border: 1px solid rgba(0, 240, 255, 0.1);
-      color: #b0ccee;
-    }
-    .project-card p {
-      color: #b8cef0;
-      line-height: 1.6;
-    }
-
-    .other-projects {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 1.2rem;
-      margin: 2rem 0 0.5rem;
-    }
-    .other-project {
-      background: rgba(0, 240, 255, 0.02);
-      border: 1px solid rgba(0, 240, 255, 0.08);
-      border-radius: 30px;
-      padding: 1rem;
-      text-align: center;
-      transition: 0.3s ease;
-      font-weight: 500;
-      color: #c8d8f0;
-    }
-    .other-project:hover {
-      border-color: #00f0ff44;
-      box-shadow: 0 0 30px #00f0ff11;
-      transform: translateY(-4px);
-    }
-    .other-project i {
-      color: #00f0ff;
-      margin-right: 8px;
-    }
-
-    /* ---------- EXPERIENCE ---------- */
-    .exp-card {
-      background: rgba(18, 28, 46, 0.4);
-      backdrop-filter: blur(6px);
-      border-radius: 40px;
-      padding: 2rem 2.5rem;
-      border: 1px solid rgba(0, 240, 255, 0.08);
-      transition: 0.3s ease;
-    }
-    .exp-card:hover {
-      border-color: #00f0ff44;
-      box-shadow: 0 0 40px #00f0ff11;
-    }
-    .exp-card h3 {
-      font-size: 1.6rem;
-      margin-bottom: 0.8rem;
-    }
-    .exp-card ul {
-      list-style: none;
-      color: #c8d8f0;
-      line-height: 1.8;
-    }
-    .exp-card ul li::before {
-      content: '▹';
-      color: #00f0ff;
-      margin-right: 12px;
-    }
-
-    /* ---------- CERTIFICATIONS ---------- */
-    .cert-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.2rem;
-      margin-top: 0.5rem;
-    }
-    .cert-item {
-      background: rgba(0, 240, 255, 0.04);
-      border: 1px solid rgba(0, 240, 255, 0.08);
-      border-radius: 40px;
-      padding: 0.6rem 1.8rem;
-      font-weight: 500;
-      color: #b0dcff;
-      transition: 0.3s ease;
-    }
-    .cert-item:hover {
-      border-color: #00f0ff55;
-      box-shadow: 0 0 25px #00f0ff1a;
-    }
-    .cert-item i {
-      color: #00f0ff;
-      margin-right: 8px;
-    }
-
-    /* ---------- CONTACT ---------- */
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2.5rem;
-      margin: 1rem 0;
-    }
-    @media (max-width: 750px) {
-      .contact-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-    .contact-info {
+    /* floating social icons (fixed) */
+    .social-float {
+      position: fixed;
+      right: 24px;
+      bottom: 120px;
       display: flex;
       flex-direction: column;
-      gap: 1.2rem;
+      gap: 12px;
+      z-index: 100;
     }
-    .contact-item {
+    .social-float a {
+      background: rgba(17, 17, 17, 0.7);
+      backdrop-filter: blur(8px);
+      padding: 10px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      color: #A9A9A9;
+      transition: all 0.3s ease;
       display: flex;
       align-items: center;
-      gap: 1.2rem;
-      background: rgba(18, 28, 46, 0.3);
-      padding: 1rem 1.8rem;
-      border-radius: 60px;
-      border: 1px solid rgba(0, 240, 255, 0.06);
-      transition: 0.3s ease;
+      justify-content: center;
     }
-    .contact-item:hover {
-      border-color: #00f0ff44;
-      box-shadow: 0 0 25px #00f0ff11;
-    }
-    .contact-item i {
-      font-size: 1.4rem;
-      color: #00f0ff;
-      width: 30px;
-    }
-    .contact-item a, .contact-item span {
-      color: #d0e4ff;
-      text-decoration: none;
-      font-weight: 500;
+    .social-float a:hover {
+      color: #fff;
+      border-color: #6C63FF;
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(108, 99, 255, 0.2);
     }
 
-    .contact-message {
-      background: rgba(18, 28, 46, 0.3);
-      backdrop-filter: blur(4px);
-      border-radius: 40px;
-      padding: 2rem;
-      border: 1px solid rgba(0, 240, 255, 0.06);
-    }
-    .contact-message p {
-      color: #c0d8f0;
-      font-size: 1rem;
-      line-height: 1.6;
-    }
-    .contact-message .msg-icon {
-      color: #00f0ff;
-      font-size: 2.2rem;
-      opacity: 0.3;
-      margin-bottom: 0.5rem;
-    }
-
-    /* ---------- FOOTER ---------- */
-    footer {
-      margin-top: 3rem;
-      padding: 2.5rem 5%;
-      border-top: 1px solid rgba(0, 240, 255, 0.08);
+    /* loading screen (simulated) */
+    .loading-screen {
+      position: fixed;
+      inset: 0;
+      background: #090909;
       display: flex;
-      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      z-index: 999999;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+    .loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    .loader-ring {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 3px solid rgba(108, 99, 255, 0.1);
+      border-top-color: #6C63FF;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* tool icons grid */
+    .tool-icon {
+      filter: grayscale(0.2);
+      transition: all 0.3s ease;
+    }
+    .tool-icon:hover {
+      filter: grayscale(0);
+      transform: scale(1.05);
+      color: #6C63FF;
+    }
+
+    /* faq accordion */
+    .faq-item {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 16px 0;
+      cursor: pointer;
+    }
+    .faq-item .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, opacity 0.3s ease;
+      opacity: 0;
+    }
+    .faq-item.active .faq-answer {
+      max-height: 300px;
+      opacity: 1;
+    }
+    .faq-item .faq-question {
+      display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 1.5rem;
-      color: #6a86aa;
     }
-    .footer-tagline {
-      font-size: 0.9rem;
-      color: #8aa8d0;
+    .faq-item .faq-icon {
+      transition: transform 0.3s ease;
     }
-    .footer-tagline i {
-      color: #00f0ff;
-      margin: 0 4px;
+    .faq-item.active .faq-icon {
+      transform: rotate(180deg);
     }
 
-    /* ---------- RESPONSIVE ---------- */
-    @media (max-width: 780px) {
-      .nav-links {
-        gap: 1rem;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      .hero h1 {
-        font-size: 2.6rem;
-      }
-      .quote-card {
-        padding: 1.5rem;
-      }
-      .section-title {
-        font-size: 2rem;
-      }
-      .project-showcase {
-        grid-template-columns: 1fr;
-      }
+    /* blog cards */
+    .blog-card {
+      transition: all 0.3s ease;
     }
-    @media (max-width: 580px) {
-      header {
-        flex-wrap: wrap;
-        gap: 0.6rem;
-        justify-content: center;
+    .blog-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(108, 99, 255, 0.25);
+    }
+
+    /* responsive fixes */
+    @media (max-width: 640px) {
+      .social-float {
+        right: 12px;
+        bottom: 80px;
+        gap: 8px;
       }
-      .typing-wrapper {
-        font-size: 1.2rem;
-        min-height: 2.4rem;
-      }
-      .btn-primary, .btn-outline {
-        padding: 0.7rem 1.8rem;
-        font-size: 0.9rem;
+      .social-float a {
+        padding: 8px;
+        width: 40px;
+        height: 40px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <div class="logo"><i class="fas fa-code"></i> Kaif</div>
-    <div class="nav-links">
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="#experience">Experience</a>
-      <a href="#contact">Contact</a>
-      <a href="#contact" class="nav-cta"><i class="fas fa-paper-plane"></i> Hire</a>
+  <!-- LOADING SCREEN -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loader-ring"></div>
+  </div>
+
+  <!-- SCROLL PROGRESS -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- CURSOR GLOW (spotlight) -->
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <!-- BACKGROUND BLOBS -->
+  <div class="blob-bg"></div>
+  <div class="blob-bg-2"></div>
+
+  <!-- FLOATING SHAPES -->
+  <div class="floating-shape" style="width: 200px;height:200px;top:10%;left:5%;"></div>
+  <div class="floating-shape" style="width: 140px;height:140px;bottom:20%;right:8%;animation-duration:18s;"></div>
+  <div class="floating-shape" style="width: 100px;height:100px;top:60%;left:80%;animation-duration:22s;"></div>
+
+  <!-- FLOATING SOCIAL ICONS (fixed) -->
+  <div class="social-float">
+    <a href="https://instagram.com/chatgpt_method" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram" size="20"></i></a>
+    <a href="https://youtube.com/@FluentJourney01" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube" size="20"></i></a>
+    <a href="https://coursekaro.in" target="_blank" aria-label="Website"><i class="fa-brands fa-globe" size="20"></i></a>
+  </div>
+
+  <!-- STICKY NAVBAR -->
+  <nav class="fixed top-0 left-0 w-full z-50 glass px-6 py-3 flex items-center justify-between" style="background: rgba(9,9,9,0.7); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.02);">
+    <div class="font-satoshi font-bold text-xl tracking-tight text-white">Kaif<span class="text-[#6C63FF]">.</span></div>
+    <div class="hidden md:flex gap-8 text-sm font-medium text-muted">
+      <a href="#about" class="hover:text-white transition relative after:content-[''] after:absolute after:left-0 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-[#6C63FF] after:transition-all hover:after:w-full">About</a>
+      <a href="#services" class="hover:text-white transition relative after:content-[''] after:absolute after:left-0 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-[#6C63FF] after:transition-all hover:after:w-full">Services</a>
+      <a href="#projects" class="hover:text-white transition relative after:content-[''] after:absolute after:left-0 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-[#6C63FF] after:transition-all hover:after:w-full">Projects</a>
+      <a href="#contact" class="hover:text-white transition relative after:content-[''] after:absolute after:left-0 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-[#6C63FF] after:transition-all hover:after:w-full">Contact</a>
     </div>
-  </header>
-
-  <!-- HERO -->
-  <section class="hero" id="home">
-    <div class="hero-content">
-      <h1>Hey, I am <span class="highlight">Kaif</span></h1>
-      <div class="typing-wrapper" id="typingWrapper">
-        <span id="typedText">Full Stack Developer</span><span class="cursor"></span>
-      </div>
-      <p class="hero-sub">
-        I build modern websites, AI-powered tools, and automation systems that solve real problems. 
-        I'm passionate about creating fast, user-friendly digital experiences while constantly learning 
-        and experimenting with new technologies.
-      </p>
-
-      <div class="quote-card">
-        <i class="fas fa-quote-left"></i>
-        <p>I enjoy turning ideas into real products. Whether it's building websites, AI tools, or automation systems, I focus on creating solutions that are practical, fast, and impactful.</p>
-        <div class="author">Kaif <small>· Full Stack Developer & AI Builder</small></div>
-      </div>
-
-      <div class="hero-actions">
-        <a href="#projects" class="btn-primary"><i class="fas fa-rocket"></i> View My Work</a>
-        <a href="#contact" class="btn-outline"><i class="fas fa-comment"></i> Let's Talk</a>
-      </div>
+    <div class="flex items-center gap-3">
+      <a href="#contact" class="text-sm bg-[#6C63FF] px-5 py-2 rounded-full font-medium hover:shadow-[0_0_30px_#6C63FF] transition-all hover:scale-105">Hire Me</a>
     </div>
-  </section>
+  </nav>
 
-  <!-- ABOUT -->
-  <section class="section" id="about">
-    <h2 class="section-title">About Me</h2>
-    <div class="section-sub">self-taught · builder · creator</div>
-    <div class="about-grid">
-      <div class="about-text">
-        <p>
-          I'm a self-taught full stack developer who loves building websites, AI applications, and automation tools. 
-          I enjoy solving problems with technology and continuously learning new skills. Alongside development, 
-          I also create content, edit videos, and explore digital marketing to grow my own projects.
+  <!-- MAIN CONTENT -->
+  <main class="relative z-10 max-w-7xl mx-auto px-6 md:px-10 pt-24 pb-20">
+
+    <!-- ========== HERO ========== -->
+    <section class="min-h-[90vh] flex items-center relative" id="hero">
+      <div class="grid md:grid-cols-2 gap-12 w-full items-center">
+        <div class="space-y-6">
+          <div class="inline-block px-4 py-1.5 rounded-full glass text-xs font-medium text-[#00D4FF] border border-[#00D4FF]/20 animate-pulse">
+            🚀 Social Media Strategist &amp; SEO Executive
+          </div>
+          <h1 class="font-satoshi text-5xl md:text-7xl font-bold leading-[1.1] tracking-tight">
+            Kaif <span class="gradient-text">Ali</span>
+          </h1>
+          <p class="text-xl md:text-2xl text-muted font-light max-w-lg leading-relaxed">
+            Helping educational brands &amp; businesses grow organically through SEO, content strategy and social media.
+          </p>
+          <div class="flex flex-wrap gap-4 pt-2">
+            <a href="#contact" class="ripple-btn bg-[#6C63FF] hover:bg-[#7b73ff] px-8 py-3 rounded-full font-medium transition flex items-center gap-2 shadow-lg shadow-[#6C63FF]/20 hover:shadow-[#6C63FF]/40">
+              Hire Me <span>→</span>
+            </a>
+            <a href="#projects" class="glass px-8 py-3 rounded-full font-medium border border-white/10 hover:border-[#6C63FF]/50 transition flex items-center gap-2 hover:bg-white/5">
+              View Projects
+            </a>
+            <a href="#" class="glass px-8 py-3 rounded-full font-medium border border-white/10 hover:border-[#00D4FF]/50 transition flex items-center gap-2 hover:bg-white/5">
+              Download Resume
+            </a>
+          </div>
+          <!-- floating stats cards (hero) -->
+          <div class="grid grid-cols-3 gap-3 pt-8">
+            <div class="glass-card p-4 rounded-2xl text-center hover:border-[#6C63FF]/30 transition">
+              <div class="counter-number text-2xl font-bold text-[#6C63FF]" data-target="40">0</div>
+              <span class="text-xs text-muted">M+ Views</span>
+            </div>
+            <div class="glass-card p-4 rounded-2xl text-center hover:border-[#00D4FF]/30 transition">
+              <div class="counter-number text-2xl font-bold text-[#00D4FF]" data-target="34">0</div>
+              <span class="text-xs text-muted">K+ Followers</span>
+            </div>
+            <div class="glass-card p-4 rounded-2xl text-center hover:border-[#00E676]/30 transition">
+              <div class="counter-number text-2xl font-bold text-[#00E676]" data-target="15">0</div>
+              <span class="text-xs text-muted">K+ Subs</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-6 text-xs text-muted pt-2">
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-[#6C63FF]"></span> New Delhi, India</span>
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-[#00D4FF]"></span> Available for freelance</span>
+          </div>
+        </div>
+        <div class="relative flex justify-center">
+          <div class="w-72 h-72 md:w-96 md:h-96 rounded-full bg-gradient-to-tr from-[#6C63FF] to-[#00D4FF] p-1 shadow-2xl shadow-[#6C63FF]/30 animate-pulse">
+            <div class="w-full h-full rounded-full bg-[#090909] flex items-center justify-center text-7xl font-bold font-space text-[#6C63FF]">
+              KA
+            </div>
+          </div>
+          <div class="absolute -bottom-4 -right-4 glass-card px-5 py-2 rounded-full text-sm font-medium border border-[#6C63FF]/30 animate-bounce">
+            📍 New Delhi
+          </div>
+          <div class="absolute -top-4 -left-4 glass-card px-4 py-2 rounded-full text-xs border border-[#00D4FF]/20">
+            ⚡ 40M+ views
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== TRUSTED NUMBERS (full width) ========== -->
+    <section class="py-12">
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6 text-center glass-card rounded-3xl p-6 md:p-10 border border-white/5">
+        <div><div class="counter-number text-4xl font-bold text-white" data-target="40">0</div><span class="text-muted text-sm">M+ Views</span></div>
+        <div><div class="counter-number text-4xl font-bold text-white" data-target="34">0</div><span class="text-muted text-sm">K+ Followers</span></div>
+        <div><div class="counter-number text-4xl font-bold text-white" data-target="15">0</div><span class="text-muted text-sm">K+ Subscribers</span></div>
+        <div><div class="counter-number text-4xl font-bold text-white" data-target="70">0</div><span class="text-muted text-sm">+ Videos</span></div>
+        <div><div class="counter-number text-4xl font-bold text-white" data-target="4">0</div><span class="text-muted text-sm">+ Channels</span></div>
+      </div>
+    </section>
+
+    <!-- ========== ABOUT + SKILLS ========== -->
+    <section id="about" class="py-20 grid md:grid-cols-2 gap-12 items-start">
+      <div class="space-y-6 reveal">
+        <span class="text-[#6C63FF] font-medium text-sm tracking-widest uppercase">About Me</span>
+        <h2 class="font-satoshi text-4xl md:text-5xl font-bold leading-tight">Strategist, Creator &amp; <span class="gradient-text">Growth Architect</span></h2>
+        <p class="text-muted leading-relaxed text-base md:text-lg">
+          I am a Social Media &amp; SEO Executive with experience managing educational YouTube channels, Instagram pages and websites.
+          I specialize in YouTube SEO, Keyword Research, Content Strategy, Script Writing, Thumbnail Strategy, Audience Growth, Organic Marketing,
+          Blog Writing, WordPress, Analytics, and AI-assisted Content Creation.
         </p>
-        <div class="about-roles">
-          <span><i class="fas fa-code"></i> Full Stack Developer</span>
-          <span><i class="fas fa-robot"></i> AI Automation Developer</span>
-          <span><i class="fas fa-video"></i> Video Editor</span>
-          <span><i class="fas fa-paint-brush"></i> Website Designer</span>
+        <p class="text-muted leading-relaxed text-sm">
+          I enjoy solving growth problems using creativity, SEO and data.
+        </p>
+        <div class="grid grid-cols-2 gap-3 pt-2">
+          <div class="glass-card p-4 rounded-2xl hover:border-[#6C63FF]/30 transition">
+            <span class="block text-[#6C63FF] font-bold">YouTube SEO</span>
+            <span class="text-xs text-muted">Keyword Research · Growth</span>
+          </div>
+          <div class="glass-card p-4 rounded-2xl hover:border-[#00D4FF]/30 transition">
+            <span class="block text-[#00D4FF] font-bold">Content Strategy</span>
+            <span class="text-xs text-muted">Script · Thumbnail</span>
+          </div>
+          <div class="glass-card p-4 rounded-2xl hover:border-[#00E676]/30 transition">
+            <span class="block text-[#00E676] font-bold">Analytics</span>
+            <span class="text-xs text-muted">GSC · GA4</span>
+          </div>
+          <div class="glass-card p-4 rounded-2xl hover:border-white/30 transition">
+            <span class="block text-white font-bold">AI Consulting</span>
+            <span class="text-xs text-muted">ChatGPT · Automation</span>
+          </div>
         </div>
       </div>
-      <div>
-        <h4 style="color:#a0f0ff; margin-bottom:0.5rem; font-size:1.1rem;"><i class="fas fa-cogs"></i> Skills & Tools</h4>
-        <div class="skills-grid">
-          <span class="skill-tag"><i class="fab fa-html5"></i> HTML</span>
-          <span class="skill-tag"><i class="fab fa-css3-alt"></i> CSS</span>
-          <span class="skill-tag"><i class="fab fa-js"></i> JavaScript</span>
-          <span class="skill-tag"><i class="fab fa-php"></i> PHP</span>
-          <span class="skill-tag"><i class="fas fa-database"></i> MySQL</span>
-          <span class="skill-tag"><i class="fas fa-brain"></i> AI Integration</span>
-          <span class="skill-tag"><i class="fas fa-plug"></i> API Dev</span>
-          <span class="skill-tag"><i class="fas fa-terminal"></i> Prompt Eng.</span>
-          <span class="skill-tag"><i class="fas fa-pen-fancy"></i> UI/UX</span>
-          <span class="skill-tag"><i class="fas fa-cut"></i> Video Editing</span>
-          <span class="skill-tag"><i class="fas fa-chart-line"></i> SEO</span>
-          <span class="skill-tag"><i class="fas fa-arrows-spin"></i> Automation</span>
+      <div class="space-y-6 reveal">
+        <span class="text-[#6C63FF] font-medium text-sm tracking-widest uppercase">Skills &amp; Expertise</span>
+        <div class="flex flex-wrap gap-3">
+          <span class="glass-card px-5 py-2.5 rounded-full text-sm border border-[#6C63FF]/20 hover:border-[#6C63FF] transition hover:bg-[#6C63FF]/5">SEO</span>
+          <span class="glass-card px-5 py-2.5 rounded-full text-sm border border-[#6C63FF]/20 hover:border-[#6C63FF] transition">YouTube SEO</span>
+          <span class="glass-card px-5 py-2.5 rounded-full text-sm hover:border-white/30 transition">Google Search Console</span>
+          <span class="glass-card px-5 py-2.5 rounded-full text-sm hover:border-white/30 transition">Google Analytics</span>
+          <span class="glass-card px-5 py-2.5 rounded-full text-sm hover:border-white/30 transition">Keyword Research</span>
+          <span class="glass-card px-5 py-2.5 rounded-full text-sm hover:border-white/30 transition">Canva</span>
+          <span class="glass-card px-5 py-2.5 rounded-full text-sm hover:border-white/30 transition">CapCut</span>
+          <span class="glass-card px-5 py-2.5 rounded-full text-sm hover:border-white/30 transition">Filmora</span>
+          <span class="glass-card px-5 py-2.5 rounded-full text-sm hover:border-white/30 transition">Clipchamp</span>
+          <span class="glass-card px-5 py-2.5 rounded-full text-sm hover:border-white/30 transition">OpenShot</span>
+          <span class="glass-card px-5 py-2.5 rounded-full text-sm hover:border-white/30 transition">ChatGPT</span>
+          <span class="glass-card px-5 py-2.5 rounded-full text-sm hover:border-white/30 transition">Content Strategy</span>
+          <span class="glass-card px-5 py-2.5 rounded-full text-sm hover:border-white/30 transition">WordPress</span>
+          <span class="glass-card px-5 py-2.5 rounded-full text-sm hover:border-white/30 transition">HTML</span>
+          <span class="glass-card px-5 py-2.5 rounded-full text-sm hover:border-white/30 transition">CSS</span>
+          <span class="glass-card px-5 py-2.5 rounded-full text-sm hover:border-white/30 transition">JavaScript</span>
+          <span class="glass-card px-5 py-2.5 rounded-full text-sm hover:border-white/30 transition">PYTHON</span>
+          <span class="glass-card px-5 py-2.5 rounded-full text-sm hover:border-white/30 transition">AI Tools</span>
+        </div>
+        <!-- mini work process -->
+        <div class="glass-card p-6 rounded-3xl mt-6">
+          <h4 class="font-satoshi font-bold text-sm tracking-wider text-muted mb-4">⚡ Work Process</h4>
+          <div class="grid grid-cols-3 gap-2 text-xs text-center">
+            <div class="p-2 rounded-xl bg-white/5"><span class="block font-bold text-[#6C63FF]">01</span> Research</div>
+            <div class="p-2 rounded-xl bg-white/5"><span class="block font-bold text-[#00D4FF]">02</span> Planning</div>
+            <div class="p-2 rounded-xl bg-white/5"><span class="block font-bold text-[#00E676]">03</span> Content Creation</div>
+            <div class="p-2 rounded-xl bg-white/5"><span class="block font-bold text-[#6C63FF]">04</span> SEO Optimization</div>
+            <div class="p-2 rounded-xl bg-white/5"><span class="block font-bold text-[#00D4FF]">05</span> Growth Analysis</div>
+            <div class="p-2 rounded-xl bg-white/5"><span class="block font-bold text-[#00E676]">06</span> Continuous Improvement</div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- PROJECTS -->
-  <section class="section" id="projects">
-    <h2 class="section-title">Featured Project</h2>
-    <div class="section-sub">building ideas into reality</div>
-
-    <div class="project-showcase">
-      <div class="project-card neon-box">
-        <h3><i class="fas fa-graduation-cap"></i> CourseKaro</h3>
-        <p>An AI-powered course platform built to help students learn through affordable and accessible online education. Designed with performance, simplicity, and scalability in mind.</p>
-        <div class="tech-stack">
-          <span>PHP</span><span>JavaScript</span><span>MySQL</span><span>HTML</span><span>CSS</span>
+    <!-- ========== SERVICES ========== -->
+    <section id="services" class="py-16">
+      <div class="text-center mb-12">
+        <span class="text-[#6C63FF] font-medium tracking-widest text-sm uppercase">Services</span>
+        <h2 class="font-satoshi text-4xl md:text-5xl font-bold mt-2">What I <span class="gradient-text">Deliver</span></h2>
+        <p class="text-muted mt-3 max-w-xl mx-auto">Strategic solutions to grow your brand organically.</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="glass-card p-6 rounded-3xl tilt-card hover:shadow-[0_0_40px_#6C63FF]/10 transition-all duration-300 border border-white/5 hover:border-[#6C63FF]/20">
+          <div class="text-4xl mb-3">📈</div>
+          <h3 class="text-xl font-bold">YouTube SEO</h3>
+          <p class="text-muted text-sm mt-2">Rank higher, grow faster with data-driven optimization and keyword strategy.</p>
+        </div>
+        <div class="glass-card p-6 rounded-3xl tilt-card hover:shadow-[0_0_40px_#00D4FF]/10 transition-all duration-300 border border-white/5 hover:border-[#00D4FF]/20">
+          <div class="text-4xl mb-3">📝</div>
+          <h3 class="text-xl font-bold">Content Strategy</h3>
+          <p class="text-muted text-sm mt-2">Scripts, thumbnails &amp; content calendars that engage and convert.</p>
+        </div>
+        <div class="glass-card p-6 rounded-3xl tilt-card hover:shadow-[0_0_40px_#00E676]/10 transition-all duration-300 border border-white/5 hover:border-[#00E676]/20">
+          <div class="text-4xl mb-3">✍️</div>
+          <h3 class="text-xl font-bold">SEO Blog Writing</h3>
+          <p class="text-muted text-sm mt-2">High-quality articles that drive organic traffic and authority.</p>
+        </div>
+        <div class="glass-card p-6 rounded-3xl tilt-card hover:shadow-[0_0_40px_#6C63FF]/10 transition-all duration-300 border border-white/5 hover:border-[#6C63FF]/20">
+          <div class="text-4xl mb-3">🎬</div>
+          <h3 class="text-xl font-bold">Script Writing</h3>
+          <p class="text-muted text-sm mt-2">Engaging video scripts tailored for educational content and storytelling.</p>
+        </div>
+        <div class="glass-card p-6 rounded-3xl tilt-card hover:shadow-[0_0_40px_#00D4FF]/10 transition-all duration-300 border border-white/5 hover:border-[#00D4FF]/20">
+          <div class="text-4xl mb-3">📱</div>
+          <h3 class="text-xl font-bold">Instagram Growth</h3>
+          <p class="text-muted text-sm mt-2">Organic strategies that generated 40M+ views and counting.</p>
+        </div>
+        <div class="glass-card p-6 rounded-3xl tilt-card hover:shadow-[0_0_40px_#00E676]/10 transition-all duration-300 border border-white/5 hover:border-[#00E676]/20">
+          <div class="text-4xl mb-3">🤖</div>
+          <h3 class="text-xl font-bold">AI Content Consulting</h3>
+          <p class="text-muted text-sm mt-2">Leverage AI for efficient, high-quality content creation at scale.</p>
         </div>
       </div>
-      <div class="project-card neon-box">
-        <h3><i class="fas fa-robot"></i> AI Voice Generator</h3>
-        <p>Multi-Speaker Gemini TTS — a powerful AI voice generator that produces natural, expressive speech for content creators and developers.</p>
-        <div class="tech-stack">
-          <span>AI</span><span>Python</span><span>API</span><span>JavaScript</span>
+    </section>
+
+    <!-- ========== EXPERIENCE TIMELINE ========== -->
+    <section class="py-16">
+      <div class="text-center mb-12">
+        <span class="text-[#6C63FF] font-medium tracking-widest text-sm uppercase">Experience</span>
+        <h2 class="font-satoshi text-4xl font-bold">Journey so far</h2>
+      </div>
+      <div class="space-y-8 max-w-3xl mx-auto">
+        <!-- <div class="timeline-item reveal">
+          <div class="glass-card p-6 rounded-2xl"><span class="text-xs text-[#6C63FF] font-bold">2023 – Present</span><h4 class="font-bold text-lg">Social Media Strategist</h4><p class="text-muted text-sm">Fluent Journey · IGNOU Success Point · CourseKaro.in</p></div>
+        </div> -->
+        <!-- <div class="timeline-item reveal">
+          <div class="glass-card p-6 rounded-2xl"><span class="text-xs text-[#00D4FF] font-bold">2022 – 2023</span><h4 class="font-bold text-lg">SEO Executive</h4><p class="text-muted text-sm">Educational content platforms · YouTube SEO &amp; keyword research</p></div>
+        </div> -->
+        <div class="timeline-item reveal">
+          <div class="glass-card p-6 rounded-2xl"><span class="text-xs text-[#00E676] font-bold">2025 – 2026</span><h4 class="font-bold text-lg">Social Media</h4><p class="text-muted text-sm">Video scripts, thumbnails, and organic growth strategies.</p></div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <h4 style="color:#b0dcff; margin: 2rem 0 1rem; font-weight:400;"><i class="fas fa-folder-open"></i> Other Projects</h4>
-    <div class="other-projects">
-      <div class="other-project"><i class="fas fa-globe"></i> Portfolio Website</div>
-      <div class="other-project"><i class="fas fa-graduation-cap"></i> CourseKaro</div>
-      <div class="other-project"><i class="fas fa-blog"></i> AI Blog Generator</div>
-      <div class="other-project"><i class="fas fa-microphone"></i> Gemini TTS</div>
-    </div>
-  </section>
-
-  <!-- EXPERIENCE -->
-  <section class="section" id="experience">
-    <h2 class="section-title">Experience</h2>
-    <div class="section-sub">freelance · full stack · AI</div>
-    <div class="exp-card">
-      <h3><i class="fas fa-briefcase" style="color:#00f0ff; margin-right:10px;"></i> Freelance Full Stack Developer</h3>
-      <ul>
-        <li>Build modern responsive websites.</li>
-        <li>Develop AI-powered web applications.</li>
-        <li>Integrate APIs and automation workflows.</li>
-        <li>Improve website performance and user experience.</li>
-        <li>Create content and video edits for digital platforms.</li>
-      </ul>
-    </div>
-
-    <div style="margin-top: 2.5rem;">
-      <h4 style="color:#b0dcff; margin-bottom:1rem; font-weight:400;"><i class="fas fa-certificate"></i> Certifications & Interests</h4>
-      <div class="cert-grid">
-        <span class="cert-item"><i class="fas fa-check-circle"></i> Full Stack Web Development</span>
-        <span class="cert-item"><i class="fas fa-check-circle"></i> Artificial Intelligence</span>
-        <span class="cert-item"><i class="fas fa-check-circle"></i> Prompt Engineering</span>
-        <span class="cert-item"><i class="fas fa-check-circle"></i> UI/UX Design</span>
+    <!-- ========== FEATURED PROJECTS + CASE STUDIES ========== -->
+    <section id="projects" class="py-16">
+      <div class="text-center mb-12">
+        <span class="text-[#6C63FF] font-medium tracking-widest text-sm uppercase">Projects</span>
+        <h2 class="font-satoshi text-4xl md:text-5xl font-bold">Featured <span class="gradient-text">Work</span></h2>
       </div>
-    </div>
-  </section>
 
-  <!-- CONTACT -->
-  <section class="section" id="contact">
-    <h2 class="section-title">Contact</h2>
-    <div class="section-sub">let's build something together</div>
-    <div class="contact-grid">
-      <div class="contact-info">
-        <div class="contact-item"><i class="fas fa-phone-alt"></i> <a href="tel:+918744942630">+91 87449 42630</a></div>
-        <div class="contact-item"><i class="fab fa-whatsapp"></i> <a href="https://wa.me/918744942630" target="_blank">+91 87449 42630</a></div>
-        <div class="contact-item"><i class="fas fa-map-marker-alt"></i> <span>Delhi, India</span></div>
+      <!-- project cards (large) -->
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="glass-card rounded-3xl overflow-hidden group border border-white/5 hover:border-[#6C63FF]/20 transition-all duration-500">
+          <div class="h-56 bg-gradient-to-br from-[#6C63FF]/20 to-[#00D4FF]/20 flex items-center justify-center text-6xl font-bold text-[#6C63FF] relative overflow-hidden">
+            <span>📺</span>
+            <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
+             <span class="glass px-4 py-2 rounded-full text-xs" > <a href="https://www.youtube.com/@FluentJourney01"> Live Demo</span></a>
+              <span class="glass px-4 py-2 rounded-full text-xs">Case Study</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="flex gap-2 flex-wrap mb-2"><span class="text-xs bg-[#6C63FF]/20 px-3 py-1 rounded-full">YouTube</span><span class="text-xs bg-[#00D4FF]/20 px-3 py-1 rounded-full">SEO</span></div>
+            <h3 class="font-bold text-xl">Fluent Journey</h3>
+            <p class="text-muted text-sm">English learning videos, scripts, thumbnails &amp; YouTube SEO optimization.</p>
+            <!-- case study expand -->
+            <!-- <details class="mt-4 text-sm text-muted border-t border-white/5 pt-4">
+              <summary class="cursor-pointer font-medium text-white hover:text-[#6C63FF] transition">📖 Case Study</summary>
+              <div class="mt-3 space-y-2 text-xs">
+                <p><span class="text-[#6C63FF]">Problem:</span> Low visibility and engagement on educational YouTube channel.</p>
+                <p><span class="text-[#00D4FF]">Strategy:</span> Keyword research, optimized titles/descriptions, thumbnail redesign.</p>
+                <p><span class="text-[#00E676]">Execution:</span> Published 20+ videos with consistent branding and SEO.</p>
+                <p><span class="text-white">Results:</span> 15K+ subscribers, 2M+ views in 6 months.</p>
+                <p><span class="text-muted">Tools:</span> YouTube Studio, Canva, ChatGPT, VidIQ.</p>
+              </div>
+            </details> -->
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl overflow-hidden group border border-white/5 hover:border-[#00D4FF]/20 transition-all duration-500">
+          <div class="h-56 bg-gradient-to-br from-[#00D4FF]/20 to-[#00E676]/20 flex items-center justify-center text-6xl font-bold text-[#00D4FF] relative overflow-hidden">
+            <span>🎓</span>
+            <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
+              <span class="glass px-4 py-2 rounded-full text-xs"> <a href="https://nios.mvsfoundation.in/" target="_blank"> Live Demo</span></a>
+              <span class="glass px-4 py-2 rounded-full text-xs">Case Study</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="flex gap-2 flex-wrap mb-2"><span class="text-xs bg-[#00D4FF]/20 px-3 py-1 rounded-full">Strategy</span><span class="text-xs bg-[#00E676]/20 px-3 py-1 rounded-full">Growth</span></div>
+            <h3 class="font-bold text-xl">MVS Website</h3>
+            <p class="text-muted text-sm">Content strategy, video planning &amp; SEO titles for educational channel.</p>
+            <!-- <details class="mt-4 text-sm text-muted border-t border-white/5 pt-4">
+              <summary class="cursor-pointer font-medium text-white hover:text-[#00D4FF] transition">📖 Case Study</summary>
+              <div class="mt-3 space-y-2 text-xs">
+                <p><span class="text-[#6C63FF]">Problem:</span> Inconsistent content and low subscriber growth.</p>
+                <p><span class="text-[#00D4FF]">Strategy:</span> Content calendar, keyword-driven topics, thumbnail A/B testing.</p>
+                <p><span class="text-[#00E676]">Execution:</span> 40+ videos, optimized playlists, community engagement.</p>
+                <p><span class="text-white">Results:</span> 4x growth in views, 3x subscriber increase.</p>
+                <p><span class="text-muted">Tools:</span> YouTube Studio, Canva, Google Trends.</p>
+              </div>
+            </details> -->
+          </div>
+        </div>
+
+        <!-- <div class="glass-card rounded-3xl overflow-hidden group border border-white/5 hover:border-[#00D4FF]/20 transition-all duration-500">
+          <div class="h-56 bg-gradient-to-br from-[#00D4FF]/20 to-[#00E676]/20 flex items-center justify-center text-6xl font-bold text-[#00D4FF] relative overflow-hidden">
+            <span>🎓</span>
+            <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
+              <span class="glass px-4 py-2 rounded-full text-xs">Live Demo</span>
+              <span class="glass px-4 py-2 rounded-full text-xs">Case Study</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="flex gap-2 flex-wrap mb-2"><span class="text-xs bg-[#00D4FF]/20 px-3 py-1 rounded-full">Strategy</span><span class="text-xs bg-[#00E676]/20 px-3 py-1 rounded-full">Growth</span></div>
+            <h3 class="font-bold text-xl">IGNOU Success Point</h3>
+            <p class="text-muted text-sm">Content strategy, video planning &amp; SEO titles for educational channel.</p>
+            <details class="mt-4 text-sm text-muted border-t border-white/5 pt-4">
+              <summary class="cursor-pointer font-medium text-white hover:text-[#00D4FF] transition">📖 Case Study</summary>
+              <div class="mt-3 space-y-2 text-xs">
+                <p><span class="text-[#6C63FF]">Problem:</span> Inconsistent content and low subscriber growth.</p>
+                <p><span class="text-[#00D4FF]">Strategy:</span> Content calendar, keyword-driven topics, thumbnail A/B testing.</p>
+                <p><span class="text-[#00E676]">Execution:</span> 40+ videos, optimized playlists, community engagement.</p>
+                <p><span class="text-white">Results:</span> 4x growth in views, 3x subscriber increase.</p>
+                <p><span class="text-muted">Tools:</span> YouTube Studio, Canva, Google Trends.</p>
+              </div>
+            </details>
+          </div>
+        </div> -->
       </div>
-      <div class="contact-message">
-        <div class="msg-icon"><i class="fas fa-comment-dots"></i></div>
-        <p><strong style="color:#a0f0ff;">Hello Kaif,</strong><br> I visited your portfolio and would like to discuss a project with you.</p>
-        <div style="margin-top:1.2rem; display:flex; gap:0.8rem; flex-wrap:wrap;">
-          <a href="mailto:kaif@example.com" class="btn-primary" style="padding:0.6rem 1.8rem; font-size:0.9rem;"><i class="fas fa-envelope"></i> Email</a>
-          <a href="https://wa.me/918744942630" class="btn-outline" style="padding:0.6rem 1.8rem; font-size:0.9rem;"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+    </section>
+
+    <!-- ========== TOOLS (animated icon grid) ========== -->
+    <section class="py-16">
+      <div class="text-center mb-12">
+        <span class="text-[#6C63FF] font-medium tracking-widest text-sm uppercase">Tools I Use</span>
+        <h2 class="font-satoshi text-3xl font-bold">Tech Stack &amp; <span class="gradient-text">Resources</span></h2>
+      </div>
+      <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6 text-center">
+        <div class="tool-icon glass-card p-4 rounded-2xl text-muted hover:text-white transition"><i class="fa-brands fa-youtube" size="32" class="mx-auto mb-2"></i><span class="text-xs block">YouTube</span></div>
+        <div class="tool-icon glass-card p-4 rounded-2xl text-muted hover:text-white transition"><i class="fa-brands fa-instagram" size="32" class="mx-auto mb-2"></i><span class="text-xs block">Instagram</span></div>
+        <div class="tool-icon glass-card p-4 rounded-2xl text-muted hover:text-white transition"><i data-lucide="search" size="32" class="mx-auto mb-2"></i><span class="text-xs block">Google SEO</span></div>
+        <div class="tool-icon glass-card p-4 rounded-2xl text-muted hover:text-white transition"><i data-lucide="bar-chart" size="32" class="mx-auto mb-2"></i><span class="text-xs block">Analytics</span></div>
+        <div class="tool-icon glass-card p-4 rounded-2xl text-muted hover:text-white transition"><i data-lucide="pen-tool" size="32" class="mx-auto mb-2"></i><span class="text-xs block">Canva</span></div>
+        <div class="tool-icon glass-card p-4 rounded-2xl text-muted hover:text-white transition"><i data-lucide="video" size="32" class="mx-auto mb-2"></i><span class="text-xs block">CapCut</span></div>
+        <div class="tool-icon glass-card p-4 rounded-2xl text-muted hover:text-white transition"><i data-lucide="bot" size="32" class="mx-auto mb-2"></i><span class="text-xs block">ChatGPT</span></div>
+        <div class="tool-icon glass-card p-4 rounded-2xl text-muted hover:text-white transition"><i data-lucide="globe" size="32" class="mx-auto mb-2"></i><span class="text-xs block">WordPress</span></div>
+        <div class="tool-icon glass-card p-4 rounded-2xl text-muted hover:text-white transition"><i data-lucide="code" size="32" class="mx-auto mb-2"></i><span class="text-xs block">HTML/CSS/JS</span></div>
+        <div class="tool-icon glass-card p-4 rounded-2xl text-muted hover:text-white transition"><i data-lucide="database" size="32" class="mx-auto mb-2"></i><span class="text-xs block">PYTHON</span></div>
+        <div class="tool-icon glass-card p-4 rounded-2xl text-muted hover:text-white transition"><i data-lucide="git-branch" size="32" class="mx-auto mb-2"></i><span class="text-xs block">Git</span></div>
+        <div class="tool-icon glass-card p-4 rounded-2xl text-muted hover:text-white transition"><i data-lucide="sparkles" size="32" class="mx-auto mb-2"></i><span class="text-xs block">AI Tools</span></div>
+      </div>
+    </section>
+
+    <!-- ========== TESTIMONIALS (auto slide marquee) ========== -->
+    <!-- <section class="py-12">
+      <div class="text-center mb-8">
+        <span class="text-[#6C63FF] font-medium tracking-widest text-sm uppercase">Testimonials</span>
+        <h2 class="font-satoshi text-3xl font-bold">What clients say</h2>
+      </div>
+      <div class="overflow-hidden relative">
+        <div class="flex gap-6 marquee-wrap">
+          <div class="glass-card p-6 rounded-2xl min-w-[280px] md:min-w-[320px] border border-white/5">“Kaif transformed our YouTube channel. Views skyrocketed.”</div>
+          <div class="glass-card p-6 rounded-2xl min-w-[280px] md:min-w-[320px] border border-white/5">“His SEO strategies are top-tier. Highly recommend.”</div>
+          <div class="glass-card p-6 rounded-2xl min-w-[280px] md:min-w-[320px] border border-white/5">“Great content strategist, very professional and creative.”</div>
+          <div class="glass-card p-6 rounded-2xl min-w-[280px] md:min-w-[320px] border border-white/5">“Helped us grow from 0 to 15k subscribers organically.”</div>
+          <div class="glass-card p-6 rounded-2xl min-w-[280px] md:min-w-[320px] border border-white/5">“Creative, data-driven, and results oriented. A pleasure to work with.”</div>
+          <div class="glass-card p-6 rounded-2xl min-w-[280px] md:min-w-[320px] border border-white/5">“Kaif’s content strategy boosted our engagement by 300%.”</div>
+
+          <div class="glass-card p-6 rounded-2xl min-w-[280px] md:min-w-[320px] border border-white/5">“Kaif transformed our YouTube channel. Views skyrocketed.”</div>
+          <div class="glass-card p-6 rounded-2xl min-w-[280px] md:min-w-[320px] border border-white/5">“His SEO strategies are top-tier. Highly recommend.”</div>
+          <div class="glass-card p-6 rounded-2xl min-w-[280px] md:min-w-[320px] border border-white/5">“Great content strategist, very professional and creative.”</div>
+          <div class="glass-card p-6 rounded-2xl min-w-[280px] md:min-w-[320px] border border-white/5">“Helped us grow from 0 to 15k subscribers organically.”</div>
+          <div class="glass-card p-6 rounded-2xl min-w-[280px] md:min-w-[320px] border border-white/5">“Creative, data-driven, and results oriented. A pleasure to work with.”</div>
+          <div class="glass-card p-6 rounded-2xl min-w-[280px] md:min-w-[320px] border border-white/5">“Kaif’s content strategy boosted our engagement by 300%.”</div>
         </div>
       </div>
-    </div>
-  </section>
+    </section> -->
 
-  <!-- FOOTER -->
-  <footer>
-    <div>
-      <span style="font-weight:600; font-size:1.2rem; background:linear-gradient(135deg,#a0f0ff,#00f0ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">Kaif</span>
-      <span style="opacity:0.4; margin:0 10px;">|</span>
-      <span style="font-size:0.9rem;">© 2026 Kaif. All Rights Reserved.</span>
-      <div class="footer-tagline" style="margin-top:4px;">
-        <i class="fas fa-code"></i> Building Ideas into Reality with Code & AI.
+    <!-- ========== BLOG SECTION ========== -->
+    <section class="py-16">
+      <div class="text-center mb-12">
+        <span class="text-[#6C63FF] font-medium tracking-widest text-sm uppercase">Blog</span>
+        <h2 class="font-satoshi text-3xl font-bold">Latest <span class="gradient-text">Insights</span></h2>
       </div>
-    </div>
-    <div style="display:flex; gap:1.2rem; font-size:0.85rem; color:#6a86aa;">
-      <span>Developed by Kaif</span>
-    </div>
-  </footer>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="glass-card p-6 rounded-3xl blog-card border border-white/5"><span class="text-xs text-[#6C63FF]">SEO</span><h4 class="font-bold text-lg mt-2">YouTube SEO 2026: What Works</h4><p class="text-muted text-sm">Data-driven strategies for ranking in 2026.</p><span class="text-xs text-muted block mt-3">12 Jan 2026</span></div>
+        <div class="glass-card p-6 rounded-3xl blog-card border border-white/5"><span class="text-xs text-[#00D4FF]">Strategy</span><h4 class="font-bold text-lg mt-2">Content Strategy for Educational Brands</h4><p class="text-muted text-sm">How to create content that educates and converts.</p><span class="text-xs text-muted block mt-3">5 Jan 2026</span></div>
+        <div class="glass-card p-6 rounded-3xl blog-card border border-white/5"><span class="text-xs text-[#00E676]">AI</span><h4 class="font-bold text-lg mt-2">AI-Assisted Content Creation</h4><p class="text-muted text-sm">Leveraging ChatGPT and AI tools for scale.</p><span class="text-xs text-muted block mt-3">28 Dec 2025</span></div>
+      </div>
+    </section>
 
-  <!-- TYPING SCRIPT -->
+    <!-- ========== FAQ (animated accordion) ========== -->
+    <section class="py-12 max-w-2xl mx-auto">
+      <div class="text-center mb-10">
+        <span class="text-[#6C63FF] font-medium tracking-widest text-sm uppercase">FAQ</span>
+        <h2 class="font-satoshi text-3xl font-bold">Frequently Asked <span class="gradient-text">Questions</span></h2>
+      </div>
+      <div class="space-y-2">
+        <div class="faq-item active">
+          <div class="faq-question"><span class="font-medium">What services do you offer?</span><span class="faq-icon text-[#6C63FF]">▼</span></div>
+          <div class="faq-answer text-muted text-sm">YouTube SEO, Content Strategy, SEO Blog Writing, Script Writing, Instagram Growth, Thumbnail Strategy, Keyword Research, Social Media Management, Website SEO, and AI Content Consulting.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question"><span class="font-medium">How much do you charge?</span><span class="faq-icon text-[#6C63FF]">▼</span></div>
+          <div class="faq-answer text-muted text-sm">Pricing depends on project scope. I offer custom packages for educational brands and businesses. Contact me for a quote.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question"><span class="font-medium">What platforms do you specialize in?</span><span class="faq-icon text-[#6C63FF]">▼</span></div>
+          <div class="faq-answer text-muted text-sm">YouTube, Instagram, WordPress, and various content management systems. I also work with Google Analytics and Search Console.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question"><span class="font-medium">Can you help with AI content creation?</span><span class="faq-icon text-[#6C63FF]">▼</span></div>
+          <div class="faq-answer text-muted text-sm">Absolutely. I consult on AI-assisted content creation using ChatGPT and other AI tools to improve efficiency and quality.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== CONTACT ========== -->
+    <section id="contact" class="py-16 glass-card rounded-4xl p-6 md:p-12 border border-white/5 reveal">
+      <div class="grid md:grid-cols-2 gap-12">
+        <div>
+          <span class="text-[#6C63FF] font-medium tracking-widest text-sm uppercase">Contact</span>
+          <h2 class="font-satoshi text-4xl md:text-5xl font-bold mt-2">Let's work <span class="gradient-text">together</span></h2>
+          <p class="text-muted mt-3">📍 New Delhi, India</p>
+          <p class="text-muted"><a href="mailto:mblowing665@gmail.com" class="text-[#6C63FF] hover:underline">mblowing665@gmail.com</a></p>
+          <p class="text-muted">📞 +91 8178609468</p>
+          <div class="flex gap-4 mt-6">
+            <a href="https://instagram.com/chatgpt_method" target="_blank" class="glass-card p-3 rounded-full hover:text-white hover:border-[#6C63FF]/40 transition"><i class="fa-brands fa-instagram" size="22"></i></a>
+            <a href="https://youtube.com/@FluentJourney01" target="_blank" class="glass-card p-3 rounded-full hover:text-white hover:border-[#6C63FF]/40 transition"><i class="fa-brands fa-youtube" size="22"></i></a>
+            <a href="https://coursekaro.in" target="_blank" class="glass-card p-3 rounded-full hover:text-white hover:border-[#6C63FF]/40 transition"><i data-lucide="globe" size="22"></i></a>
+          </div>
+        </div>
+        <form class="space-y-4">
+          <input type="text" placeholder="Your Name" class="w-full bg-black/40 border border-white/10 rounded-xl px-5 py-3 text-white focus:outline-none focus:border-[#6C63FF] transition placeholder:text-muted" />
+          <input type="email" placeholder="Email Address" class="w-full bg-black/40 border border-white/10 rounded-xl px-5 py-3 text-white focus:outline-none focus:border-[#6C63FF] transition placeholder:text-muted" />
+          <textarea rows="4" placeholder="Tell me about your project..." class="w-full bg-black/40 border border-white/10 rounded-xl px-5 py-3 text-white focus:outline-none focus:border-[#6C63FF] transition placeholder:text-muted"></textarea>
+          <button type="submit" class="ripple-btn bg-[#6C63FF] px-8 py-3 rounded-xl font-medium hover:shadow-[0_0_40px_#6C63FF] transition-all hover:scale-[1.02] w-full md:w-auto">
+            Send Message →
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="mt-16 text-center text-muted text-xs border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+      <span>© 2026 <span class="text-white font-medium">Kaif Ali</span> — Social Media Strategist &amp; SEO Executive</span>
+      <span class="flex items-center gap-4">
+        <!-- <a href="#" class="hover:text-white transition">Privacy</a>
+        <a href="#" class="hover:text-white transition">Credits</a> -->
+      </span>
+      <!-- <span class="text-[#6C63FF]">✦ Built with premium UI/UX</span> -->
+    </footer>
+
+  </main>
+
   <script>
-    (function() {
-      const titles = [
-        'Full Stack Developer',
-        'AI Automation Builder',
-        'Web Developer',
-        'UI/UX Enthusiast',
-        'Video Editor'
-      ];
-      let index = 0;
-      let charIndex = 0;
-      let isDeleting = false;
-      const typedElement = document.getElementById('typedText');
+    // ----- init lucide icons -----
+    lucide.createIcons();
 
-      function typeEffect() {
-        const currentTitle = titles[index];
-        if (isDeleting) {
-          typedElement.textContent = currentTitle.substring(0, charIndex - 1);
-          charIndex--;
-        } else {
-          typedElement.textContent = currentTitle.substring(0, charIndex + 1);
-          charIndex++;
-        }
+    // ----- custom cursor spotlight -----
+    const glow = document.getElementById('cursorGlow');
+    document.addEventListener('mousemove', (e) => {
+      glow.style.left = e.clientX + 'px';
+      glow.style.top = e.clientY + 'px';
+    });
 
-        if (!isDeleting && charIndex === currentTitle.length) {
-          isDeleting = true;
-          setTimeout(typeEffect, 2000);
-          return;
-        }
-        if (isDeleting && charIndex === 0) {
-          isDeleting = false;
-          index = (index + 1) % titles.length;
-          setTimeout(typeEffect, 400);
-          return;
-        }
-        const speed = isDeleting ? 50 : 80;
-        setTimeout(typeEffect, speed);
-      }
+    // ----- scroll progress -----
+    window.addEventListener('scroll', () => {
+      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      document.getElementById('scrollProgress').style.width = (scrollTop / scrollHeight) * 100 + '%';
+    });
 
-      typeEffect();
-    })();
+    // ----- counter animation (Intersection Observer) -----
+    const counters = document.querySelectorAll('.counter-number');
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = parseInt(el.dataset.target);
+          let current = 0;
+          const step = Math.max(1, Math.ceil(target / 45));
+          const timer = setInterval(() => {
+            current += step;
+            if (current >= target) {
+              el.textContent = target;
+              clearInterval(timer);
+            } else {
+              el.textContent = current;
+            }
+          }, 20);
+          counterObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.4 });
+    counters.forEach(c => counterObserver.observe(c));
+
+    // ----- reveal sections (fade-up) -----
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.15 });
+    reveals.forEach(r => revealObserver.observe(r));
+
+    // ----- tilt effect (cards) -----
+    document.querySelectorAll('.tilt-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = `perspective(800px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg) scale(1.02)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(800px) rotateY(0) rotateX(0) scale(1)';
+      });
+    });
+
+    // ----- ripple effect (buttons) -----
+    document.querySelectorAll('.ripple-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const ripple = document.createElement('span');
+        ripple.style.cssText = `
+          position: absolute;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.25);
+          width: 50px;
+          height: 50px;
+          left: ${x - 25}px;
+          top: ${y - 25}px;
+          transform: scale(0);
+          animation: rippleAnim 0.6s linear;
+          pointer-events: none;
+        `;
+        this.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+      });
+    });
+    // inject keyframe for ripple if not exists
+    if (!document.getElementById('rippleStyle')) {
+      const style = document.createElement('style');
+      style.id = 'rippleStyle';
+      style.textContent = `@keyframes rippleAnim { to { transform: scale(4); opacity: 0; } }`;
+      document.head.appendChild(style);
+    }
+
+    // ----- FAQ accordion (animated) -----
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.addEventListener('click', function() {
+        this.classList.toggle('active');
+      });
+    });
+
+    // ----- loading screen hide -----
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loadingScreen').classList.add('hidden');
+      }, 600);
+    });
+
+    // ----- smooth anchor scroll (optional) -----
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href === '#') return;
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
   </script>
 </body>
 </html>
